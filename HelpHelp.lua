@@ -46,7 +46,7 @@ function HelpHelp.OnEvent(self, event, ...)
 			
 			-- The main check to see if I should yell
 			if percentHealth < HelpHelp_Database["Settings"]["HealthThreshold"] then
-				SendChatMessage("Help Help!", "YELL", HelpHelp_Database["Settings"]["Language"])
+				SendChatMessage("Help Help!", "YELL") --, HelpHelp_Database["Settings"]["Language"])
 			end
 			
 			-- Store the current data for use in the next event
@@ -82,7 +82,7 @@ HelpHelp.MainFrame.About:SetText('"Help Help!" will automatically yell for help 
 HelpHelp.MainFrame.HealthThreshold = CreateFrame("Slider", "HelpHelpHealthThresholdSlider", HelpHelp.MainFrame, "OptionsSliderTemplate")
 HelpHelp.MainFrame.HealthThreshold:SetSize(125, 20)
 HelpHelp.MainFrame.HealthThreshold:SetOrientation('HORIZONTAL')
-HelpHelp.MainFrame.HealthThreshold:SetPoint('TOPLEFT', 18, -95)
+HelpHelp.MainFrame.HealthThreshold:SetPoint('TOPLEFT', 26, -95)
 HelpHelp.MainFrame.HealthThreshold:SetMinMaxValues(0, 1)
 HelpHelp.MainFrame.HealthThreshold:SetValueStep(0.1)
 getglobal(HelpHelp.MainFrame.HealthThreshold:GetName()..'Low'):SetText('0%')
