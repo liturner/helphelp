@@ -1,0 +1,8 @@
+## Interface: 11302
+## Title: Help Help!
+## Author: Turner & Pain
+## Version: 1.0.0
+## Notes: Configure an auto yell for when you start dying.
+## SavedVariables: HelpHelp_Database
+
+HelpHelp.lua
