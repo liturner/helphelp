@@ -63,7 +63,7 @@ function HelpHelp.OnAddonLoaded(self, name, ...)
 		end
 
 		-- The "Main" panel is also the settings UI
-		self.name = "HelpHelp"	
+		self.name = "Help Help!"	
 		self.refresh = function (self) HelpHelp.OnOptionRefresh(self); end;
 		self.okay = function (self) HelpHelp.OK_Clicked(self); end;
 		self.cancel = function (self) HelpHelp.Cancel_Clicked(self); end;
