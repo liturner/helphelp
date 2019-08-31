@@ -12,8 +12,7 @@ end
 
 function HelpHelp.OnEvent(self, event, ...) 
 	-- Initialise the Addon, migrate DB if neededetc
-	if event == "UNIT_HEALTH" then
-		
+	if event == "UNIT_HEALTH" then HelpHelp.OnUnitHealth(self, unpack({...})) 		
 	elseif(event == "ADDON_LOADED") then HelpHelp.OnAddonLoaded(self, unpack({...})) 
 	end
 end
