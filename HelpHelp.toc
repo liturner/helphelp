@@ -5,4 +5,4 @@
 ## Notes: Configure an auto yell for when you start dying.
 ## SavedVariables: HelpHelp_Database
 
-HelpHelp.lua
+OptionsFrame.xml

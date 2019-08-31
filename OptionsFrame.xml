@@ -1,0 +1,60 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+	<Script file="HelpHelp.lua"/>
+	<Frame name="HelpHelp">
+		<Scripts>
+			<OnLoad> HelpHelp.OnLoad(self); </OnLoad>
+			<OnEvent> HelpHelp.OnEvent(self, event, ...); </OnEvent>
+		</Scripts>
+		<Frames>
+			
+			<Slider name="HelpHelp_HealthThresholdSlider" 
+					orientation="HORIZONTAL" 
+					inherits="OptionsSliderTemplate" 
+					minValue="0" 
+					maxValue="1"
+					defaultValue="0.5"
+					valueStep="0.1">
+				<Size x="125" y="20"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="26" y="-95"/>
+				</Anchors>
+				<Scripts>
+					<OnLoad>       
+						getglobal(self:GetName()..'Low'):SetText('')
+						getglobal(self:GetName()..'High'):SetText('100%')
+						getglobal(self:GetName()..'Text'):SetText('Health Threshold')
+					</OnLoad>
+					<OnValueChanged>       
+						getglobal(self:GetName()..'High'):SetText(string.format('%.0f%%', tonumber(HelpHelp_HealthThresholdSlider:GetValue()) * 100))
+					</OnValueChanged>
+				</Scripts>   
+			</Slider>
+			
+
+		</Frames>
+		<Layers>
+			<Layer level="OVERLAY">
+			
+				<FontString text="Help Help!" inherits="GameFontNormalLarge">
+					<Anchors>
+						<Anchor point="TOPLEFT" x="16" y="-16"/>
+					</Anchors>
+				</FontString>
+				
+				<FontString 
+						text="'Help Help!' will automatically yell for help when your health drops too low. Aimed at the Role Play community, it will translate your shout to your default selected language!" 
+						inherits="SystemFont_Small"
+						justifyH="LEFT"
+						justifyV="TOP"
+						wordwrap="true">
+					<Size y="100"/>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="16" y="-40"/>
+						<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" x="-16" y="-40"/>
+					</Anchors>
+				</FontString>
+								
+			</Layer>
+		</Layers>
+	</Frame>
+</Ui>
