@@ -1,6 +1,7 @@
 HelpHelp = {}
 HelpHelp.Globals = {}
 HelpHelp.Globals.previousTime = 0
+HelpHelp.Globals.previousShout = 0
 HelpHelp.Globals.previousHealth = 0	-- Health in %
 HelpHelp.Globals.PLAYER_GUID = UnitGUID("player")
 
@@ -20,29 +21,29 @@ end
 
 -- Game Events
 function HelpHelp.OnUnitHealth(self, UnitID, ...)
-	if UnitGUID("UnitID") == HelpHelp.Globals.PLAYER_GUID then
+	if UnitGUID(UnitID) == HelpHelp.Globals.PLAYER_GUID then
 		-- Collect the info we are going to need
 		currentHealth = UnitHealth("player")
 		maxHealth = UnitHealthMax("player")
 		percentHealth = currentHealth / maxHealth
 		currentTime = GetTime()
-		deltaTime = currentTime - HelpHelp.Globals.previousTime 				-- In Milliseconds
+		deltaTime = currentTime - HelpHelp.Globals.previousTime 			-- In Milliseconds
 		deltaHealth = percentHealth - HelpHelp.Globals.previousHealth		-- In Percent
-		changeVelocity = (deltaHealth / deltaTime) * 1000	-- Health change per second (from only this hit)
-							
-		-- Early out if regaining health
-		if changeVelocity > 0 then
-			return
-		end
-		
-		-- The main check to see if I should yell
-		if percentHealth < HelpHelp_Database["Settings"]["HealthThreshold"] then
-			SendChatMessage(HelpHelp_Database.Settings.Message, "YELL", DEFAULT_CHAT_FRAME.editBox.languageID) --, HelpHelp_Database["Settings"]["Language"])
-		end
+		changeVelocity = (deltaHealth / deltaTime) * 1000					-- Health change per second (from only this hit)
+		timeSinceLastShout = currentTime - HelpHelp.Globals.previousShout	-- In Milliseconds
 		
 		-- Store the current data for use in the next event
 		HelpHelp.Globals.previousTime = currentTime
 		HelpHelp.Globals.previousHealth = percentHealth
+							
+		-- Early out if regaining health or shouted recently
+		if changeVelocity < 0 and timeSinceLastShout > 10000 then
+			-- The main check to see if I should yell
+			if percentHealth < HelpHelp_Database.Settings.HealthThreshold then
+				SendChatMessage(HelpHelp_Database.Settings.Message, "YELL", DEFAULT_CHAT_FRAME.editBox.languageID) --, HelpHelp_Database["Settings"]["Language"])
+				HelpHelp.Globals.previousShout = currentTime
+			end
+		end
 	end
 end
 

@@ -86,7 +86,7 @@
 				</FontString>
 				
 				<FontString 
-						text="'Help Help!' will automatically yell for help when your health drops too low. Aimed at the Role Play community, it will translate your shout to your default selected language!" 
+						text="'Help Help!' will automatically yell for help when your health drops too low. Aimed at the Role Play community, it will translate your shout to your charachters selected language (e.g. Common, Dwarvish, Orcish)" 
 						inherits="SystemFont_Small"
 						justifyH="LEFT"
 						justifyV="TOP"
