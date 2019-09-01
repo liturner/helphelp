@@ -59,7 +59,7 @@ function HelpHelp.OnAddonLoaded(self, name, ...)
 
 		-- Make sure we have an initialised settings database
 		if HelpHelp_Database == nil then
-			HelpHelp_Database = { AddonName = 'HelpHelp', SchemaVersion = 1, Settings = { HealthThreshold = 0.2, Language = "DWARVEN" } }
+			HelpHelp_Database = { AddonName = 'HelpHelp', SchemaVersion = 1, Settings = { Message = "Help Help!", HealthThreshold = 0.2, Language = "DWARVEN" } }
 		end
 
 		-- The "Main" panel is also the settings UI
@@ -68,6 +68,21 @@ function HelpHelp.OnAddonLoaded(self, name, ...)
 		self.okay = function (self) HelpHelp.OK_Clicked(self); end;
 		self.cancel = function (self) HelpHelp.Cancel_Clicked(self); end;
 		self.default = function (self) HelpHelp.Default_Clicked(self); end;
+		
+		
+		HelpHelp.SearchInputBox = CreateFrame("EditBox", "AdventureJournal_LootFrameInputBox", self, "InputBoxTemplate")
+		HelpHelp.SearchInputBox:SetFontObject(ChatFontSmall)
+		HelpHelp.SearchInputBox:SetPoint("TOPLEFT", 90, -62)
+		HelpHelp.SearchInputBox:SetSize(250, 24)
+		HelpHelp.SearchInputBox:SetText("Search items")
+		HelpHelp.SearchInputBox:SetFrameStrata("DIALOG")
+		HelpHelp.SearchInputBox:SetAutoFocus(false)
+		
+		
+		
+		
+		
+		
 		
 		InterfaceOptions_AddCategory(self)
 		
@@ -94,6 +109,9 @@ end
 -- Options UI Functions
 function HelpHelp.OK_Clicked(self)
 	HelpHelp_Database.Settings.HealthThreshold = tonumber(HelpHelp_HealthThresholdSlider:GetValue())
+	print("1")
+	HelpHelp_Database.Settings.Message = HelpHelp_MessageEditBox:GetText()
+	print("2")
 end
 
 function HelpHelp.Cancel_Clicked(self)
@@ -102,9 +120,17 @@ end
 
 function HelpHelp.Default_Clicked(self)
 	HelpHelp_Database.Settings.HealthThreshold = 0.2
+	HelpHelp_Database.Settings.Message = "Help Help!"
 end
 
 function HelpHelp.OnOptionRefresh(self)
 	-- Handle settings values for the UI-SliderBar-Button-Horizontal
+	print(HelpHelp_Database.Settings.Message)
+	print("Refresh")
 	HelpHelp_HealthThresholdSlider:SetValue(HelpHelp_Database.Settings.HealthThreshold)
+	-- HelpHelp_MessageEditBox:ClearFocus()
+	HelpHelp_MessageEditBox:SetText(HelpHelp_Database.Settings.Message)
+	-- HelpHelp_MessageEditBox:SetFrameStrata("DIALOG")
+	-- HelpHelp_MessageEditBox:SetAutoFocus(false)
+	print("Refresh End")
 end

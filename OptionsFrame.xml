@@ -6,29 +6,80 @@
 			<OnEvent> HelpHelp.OnEvent(self, event, ...); </OnEvent>
 		</Scripts>
 		<Frames>
-			
-			<Slider name="HelpHelp_HealthThresholdSlider" 
-					orientation="HORIZONTAL" 
-					inherits="OptionsSliderTemplate" 
-					minValue="0" 
-					maxValue="1"
-					defaultValue="0.5"
-					valueStep="0.1">
-				<Size x="125" y="20"/>
+
+			<Frame name="HelpHelp_Threshold">
 				<Anchors>
-					<Anchor point="TOPLEFT" x="26" y="-95"/>
+					<Anchor point="TOPLEFT" x="16" y="-95"/>
 				</Anchors>
-				<Scripts>
-					<OnLoad>       
-						getglobal(self:GetName()..'Low'):SetText('')
-						getglobal(self:GetName()..'High'):SetText('100%')
-						getglobal(self:GetName()..'Text'):SetText('Health Threshold')
-					</OnLoad>
-					<OnValueChanged>       
-						getglobal(self:GetName()..'High'):SetText(string.format('%.0f%%', tonumber(HelpHelp_HealthThresholdSlider:GetValue()) * 100))
-					</OnValueChanged>
-				</Scripts>   
-			</Slider>
+				<Size x="125" y="40"/>
+				
+				<!-- Title -->
+				<Layers>
+					<Layer>
+						<FontString text="Health Threshold" name="HelpHelp_ThresholdSubTitle" inherits="GameFontNormal" justifyH="LEFT" justifyV="TOP" >
+							<Anchors>
+								<Anchor point="TOPLEFT" x="0" y="0"/>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				
+				<Frames>
+					<Slider name="HelpHelp_HealthThresholdSlider" 
+						orientation="HORIZONTAL" 
+						inherits="OptionsSliderTemplate" 
+						minValue="0" 
+						maxValue="1"
+						defaultValue="0.5"
+						valueStep="0.1">
+						<Size x="125" y="20"/>
+						<Anchors>
+							<Anchor point="TOPLEFT" x="10" y="-16"/>
+						</Anchors>
+						<Scripts>
+							<OnLoad>       
+								getglobal(self:GetName()..'Low'):SetText('')
+								getglobal(self:GetName()..'High'):SetText('100%')
+							</OnLoad>
+							<OnValueChanged>       
+								getglobal(self:GetName()..'High'):SetText(string.format('%.0f%%', tonumber(HelpHelp_HealthThresholdSlider:GetValue()) * 100))
+							</OnValueChanged>
+						</Scripts>   
+					</Slider>
+				</Frames>
+			</Frame>
+			
+			
+			
+			
+			<Frame name="HelpHelp_Message">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="HelpHelp_Threshold" relativePoint="BOTTOM" x="0" y="-16"/>
+				</Anchors>
+				<Size x="125" y="200"/>
+				
+				<!-- Title -->
+				<Layers>
+					<Layer>
+						<FontString text="Message" name="HelpHelp_MessageSubTitle" inherits="GameFontNormal" justifyH="LEFT" justifyV="TOP" >
+							<Anchors>
+								<Anchor point="TOPLEFT" x="0" y="0"/>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				
+				<!-- Edit Box -->
+				<Frames>
+					<EditBox text="For the love of god" name="HelpHelp_MessageEditBox" letters="25" inherits="InputBoxTemplate" font="ChatFontSmall" autoFocus="false">
+						<Size x="400" y="62" />
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="HelpHelp_MessageSubTitle" relativePoint="TOPLEFT" x="10" y="-16" />
+						</Anchors>
+					</EditBox>
+				</Frames>
+			</Frame>
+			
 			
 
 		</Frames>
