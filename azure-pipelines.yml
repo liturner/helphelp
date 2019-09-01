@@ -1,0 +1,46 @@
+variables:
+  majorVersion: 1
+  minorVersion: 13
+  
+name: 'HelpHelp_$(majorVersion).$(minorVersion).$(rev:r)'
+
+trigger:
+- 1.13
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: |
+      **
+      !.gitignore
+      !.git/**
+      !HelpHelp.toc
+      !azure-pipelines.yml
+    TargetFolder: '$(Build.BinariesDirectory)/HelpHelp'
+    CleanTargetFolder: true
+    OverWrite: true
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      $file = '$(Build.SourcesDirectory)/HelpHelp.toc'
+      $rawVersion = '$(Build.BuildNumber)'
+      $newVersion =$rawVersion.Remove(0,9)
+      $filecontent = Get-Content $file
+      $filecontent -replace '(^## Version: .*\.).*',"## Version: $newVersion" | Set-Content $(Build.BinariesDirectory)/HelpHelp/HelpHelp.toc
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.BinariesDirectory)'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: $(Build.ArtifactStagingDirectory)
