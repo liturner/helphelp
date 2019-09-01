@@ -18,9 +18,7 @@ function HelpHelp.OnEvent(self, event, ...)
 end
 
 
-
-
-
+-- Game Events
 function HelpHelp.OnUnitHealth(self, UnitID, ...)
 	if UnitGUID("UnitID") == HelpHelp.Globals.PLAYER_GUID then
 		-- print("Player Health Change")
@@ -33,11 +31,7 @@ function HelpHelp.OnUnitHealth(self, UnitID, ...)
 		deltaTime = currentTime - HelpHelp.Globals.previousTime 				-- In Milliseconds
 		deltaHealth = percentHealth - HelpHelp.Globals.previousHealth		-- In Percent
 		changeVelocity = (deltaHealth / deltaTime) * 1000	-- Health change per second (from only this hit)
-					
-		-- print("% deltaHealth: "..deltaHealth)
-		-- print("% deltaTime: "..deltaTime)
-		-- print("% changeVelocity: "..changeVelocity)
-		
+							
 		-- Early out if regaining health
 		if changeVelocity > 0 then
 			return
@@ -45,7 +39,7 @@ function HelpHelp.OnUnitHealth(self, UnitID, ...)
 		
 		-- The main check to see if I should yell
 		if percentHealth < HelpHelp_Database["Settings"]["HealthThreshold"] then
-			SendChatMessage("Help Help!", "YELL", DEFAULT_CHAT_FRAME.editBox.languageID) --, HelpHelp_Database["Settings"]["Language"])
+			SendChatMessage(HelpHelp_Database.Settings.Message, "YELL", DEFAULT_CHAT_FRAME.editBox.languageID) --, HelpHelp_Database["Settings"]["Language"])
 		end
 		
 		-- Store the current data for use in the next event
@@ -68,31 +62,15 @@ function HelpHelp.OnAddonLoaded(self, name, ...)
 		self.okay = function (self) HelpHelp.OK_Clicked(self); end;
 		self.cancel = function (self) HelpHelp.Cancel_Clicked(self); end;
 		self.default = function (self) HelpHelp.Default_Clicked(self); end;
-		
-		
-		HelpHelp.SearchInputBox = CreateFrame("EditBox", "AdventureJournal_LootFrameInputBox", self, "InputBoxTemplate")
-		HelpHelp.SearchInputBox:SetFontObject(ChatFontSmall)
-		HelpHelp.SearchInputBox:SetPoint("TOPLEFT", 90, -62)
-		HelpHelp.SearchInputBox:SetSize(250, 24)
-		HelpHelp.SearchInputBox:SetText("Search items")
-		HelpHelp.SearchInputBox:SetFrameStrata("DIALOG")
-		HelpHelp.SearchInputBox:SetAutoFocus(false)
-		
-		
-		
-		
-		
-		
-		
+				
 		InterfaceOptions_AddCategory(self)
 		
 		SLASH_HELPHELP1 = "/helphelp"
 		
 		SlashCmdList["HELPHELP"] = function(msg)
-		  InterfaceOptionsFrame_OpenToCategory(self)
+			InterfaceOptionsFrame_OpenToCategory(self)
 		end
 		
-			
 		-- Initial the "previous" variables so that we do not need a safety check in the health event
 		currentHealth = UnitHealth("player")
 		maxHealth = UnitHealthMax("player")
@@ -104,14 +82,10 @@ function HelpHelp.OnAddonLoaded(self, name, ...)
 end
 
 
-
-
 -- Options UI Functions
 function HelpHelp.OK_Clicked(self)
 	HelpHelp_Database.Settings.HealthThreshold = tonumber(HelpHelp_HealthThresholdSlider:GetValue())
-	print("1")
 	HelpHelp_Database.Settings.Message = HelpHelp_MessageEditBox:GetText()
-	print("2")
 end
 
 function HelpHelp.Cancel_Clicked(self)
@@ -124,13 +98,7 @@ function HelpHelp.Default_Clicked(self)
 end
 
 function HelpHelp.OnOptionRefresh(self)
-	-- Handle settings values for the UI-SliderBar-Button-Horizontal
-	print(HelpHelp_Database.Settings.Message)
-	print("Refresh")
 	HelpHelp_HealthThresholdSlider:SetValue(HelpHelp_Database.Settings.HealthThreshold)
-	-- HelpHelp_MessageEditBox:ClearFocus()
 	HelpHelp_MessageEditBox:SetText(HelpHelp_Database.Settings.Message)
-	-- HelpHelp_MessageEditBox:SetFrameStrata("DIALOG")
-	-- HelpHelp_MessageEditBox:SetAutoFocus(false)
-	print("Refresh End")
+	HelpHelp_MessageEditBox:SetCursorPosition(0)
 end

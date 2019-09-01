@@ -61,7 +61,7 @@
 				<!-- Title -->
 				<Layers>
 					<Layer>
-						<FontString text="Message" name="HelpHelp_MessageSubTitle" inherits="GameFontNormal" justifyH="LEFT" justifyV="TOP" >
+						<FontString text="Message (Max 25 Charachters)" name="HelpHelp_MessageSubTitle" inherits="GameFontNormal" justifyH="LEFT" justifyV="TOP" >
 							<Anchors>
 								<Anchor point="TOPLEFT" x="0" y="0"/>
 							</Anchors>
@@ -72,7 +72,7 @@
 				<!-- Edit Box -->
 				<Frames>
 					<EditBox text="For the love of god" name="HelpHelp_MessageEditBox" letters="25" inherits="InputBoxTemplate" font="ChatFontSmall" autoFocus="false">
-						<Size x="400" y="62" />
+						<Size x="200" y="24" />
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="HelpHelp_MessageSubTitle" relativePoint="TOPLEFT" x="10" y="-16" />
 						</Anchors>
