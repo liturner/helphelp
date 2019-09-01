@@ -7,6 +7,7 @@
 		</Scripts>
 		<Frames>
 
+			<!-- Threshold Slider with Title -->
 			<Frame name="HelpHelp_Threshold">
 				<Anchors>
 					<Anchor point="TOPLEFT" x="16" y="-95"/>
@@ -24,14 +25,9 @@
 					</Layer>
 				</Layers>
 				
+				<!-- Slider -->
 				<Frames>
-					<Slider name="HelpHelp_HealthThresholdSlider" 
-						orientation="HORIZONTAL" 
-						inherits="OptionsSliderTemplate" 
-						minValue="0" 
-						maxValue="1"
-						defaultValue="0.5"
-						valueStep="0.1">
+					<Slider name="HelpHelp_HealthThresholdSlider" orientation="HORIZONTAL" inherits="OptionsSliderTemplate" minValue="0" maxValue="1" defaultValue="0.5" valueStep="0.1">
 						<Size x="125" y="20"/>
 						<Anchors>
 							<Anchor point="TOPLEFT" x="10" y="-16"/>
@@ -49,9 +45,7 @@
 				</Frames>
 			</Frame>
 			
-			
-			
-			
+			<!-- Message Edit Box with Title -->
 			<Frame name="HelpHelp_Message">
 				<Anchors>
 					<Anchor point="TOP" relativeTo="HelpHelp_Threshold" relativePoint="BOTTOM" x="0" y="-16"/>
@@ -80,12 +74,11 @@
 				</Frames>
 			</Frame>
 			
-			
-
 		</Frames>
 		<Layers>
+		
+			<!-- Overall Title and About Text -->
 			<Layer level="OVERLAY">
-			
 				<FontString text="Help Help!" inherits="GameFontNormalLarge">
 					<Anchors>
 						<Anchor point="TOPLEFT" x="16" y="-16"/>
@@ -103,8 +96,7 @@
 						<Anchor point="TOPLEFT" relativePoint="TOPLEFT" x="16" y="-40"/>
 						<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" x="-16" y="-40"/>
 					</Anchors>
-				</FontString>
-								
+				</FontString>			
 			</Layer>
 		</Layers>
 	</Frame>

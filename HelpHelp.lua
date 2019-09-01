@@ -21,8 +21,6 @@ end
 -- Game Events
 function HelpHelp.OnUnitHealth(self, UnitID, ...)
 	if UnitGUID("UnitID") == HelpHelp.Globals.PLAYER_GUID then
-		-- print("Player Health Change")
-		
 		-- Collect the info we are going to need
 		currentHealth = UnitHealth("player")
 		maxHealth = UnitHealthMax("player")
