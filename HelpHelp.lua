@@ -23,26 +23,19 @@ end
 function HelpHelp.OnUnitHealth(self, UnitID, ...)
 	if UnitGUID(UnitID) == HelpHelp.Globals.PLAYER_GUID then
 		-- Collect the info we are going to need
-		currentHealth = UnitHealth("player")
-		maxHealth = UnitHealthMax("player")
-		percentHealth = currentHealth / maxHealth
+		percentHealth = UnitHealth("player") / UnitHealthMax("player")
 		currentTime = GetTime()
-		deltaTime = currentTime - HelpHelp.Globals.previousTime 			-- In Milliseconds
 		deltaHealth = percentHealth - HelpHelp.Globals.previousHealth		-- In Percent
-		changeVelocity = (deltaHealth / deltaTime) * 1000					-- Health change per second (from only this hit)
-		timeSinceLastShout = currentTime - HelpHelp.Globals.previousShout	-- In Milliseconds
-		
+		timeSinceLastShout = currentTime - HelpHelp.Globals.previousShout	-- In Seconds
+				
 		-- Store the current data for use in the next event
 		HelpHelp.Globals.previousTime = currentTime
-		HelpHelp.Globals.previousHealth = percentHealth
-							
-		-- Early out if regaining health or shouted recently
-		if changeVelocity < 0 and timeSinceLastShout > 10000 then
-			-- The main check to see if I should yell
-			if percentHealth < HelpHelp_Database.Settings.HealthThreshold then
-				SendChatMessage(HelpHelp_Database.Settings.Message, "YELL", DEFAULT_CHAT_FRAME.editBox.languageID) --, HelpHelp_Database["Settings"]["Language"])
-				HelpHelp.Globals.previousShout = currentTime
-			end
+		HelpHelp.Globals.previousHealth = percentHealth		
+		
+		-- The main check to see if I should yell
+		if deltaHealth < 0 and timeSinceLastShout > 10 and percentHealth < HelpHelp_Database.Settings.HealthThreshold then
+			SendChatMessage(HelpHelp_Database.Settings.Message, "YELL", DEFAULT_CHAT_FRAME.editBox.languageID)
+			HelpHelp.Globals.previousShout = currentTime
 		end
 	end
 end
@@ -71,10 +64,9 @@ function HelpHelp.OnAddonLoaded(self, name, ...)
 		end
 		
 		-- Initial the "previous" variables so that we do not need a safety check in the health event
-		currentHealth = UnitHealth("player")
-		maxHealth = UnitHealthMax("player")
-		previousHealth = currentHealth / maxHealth
-		previousTime = GetTime()	
+		HelpHelp.Globals.previousHealth = UnitHealth("player") / UnitHealthMax("player")
+		HelpHelp.Globals.previousTime = GetTime()
+		HelpHelp.Globals.previousShout = HelpHelp.Globals.previousTime	
 
 		self:UnregisterEvent("ADDON_LOADED")
 	end
@@ -83,9 +75,7 @@ end
 
 -- Options UI Functions
 function HelpHelp.OK_Clicked(self)
-	print("healthSlider: "..HelpHelp_HealthThresholdSlider:GetValue())
 	HelpHelp_Database.Settings.HealthThreshold = tonumber(HelpHelp_HealthThresholdSlider:GetValue())
-	print("healthThreshold: "..HelpHelp_Database.Settings.HealthThreshold)
 	HelpHelp_Database.Settings.Message = HelpHelp_MessageEditBox:GetText()
 end
 
@@ -99,7 +89,6 @@ function HelpHelp.Default_Clicked(self)
 end
 
 function HelpHelp.OnOptionRefresh(self)
-	print("healthThreshold: "..HelpHelp_Database.Settings.HealthThreshold)
 	HelpHelp_HealthThresholdSlider:SetValue(HelpHelp_Database.Settings.HealthThreshold)
 	HelpHelp_MessageEditBox:SetText(HelpHelp_Database.Settings.Message)
 	HelpHelp_MessageEditBox:SetCursorPosition(0)
