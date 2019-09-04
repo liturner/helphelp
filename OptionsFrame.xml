@@ -27,7 +27,7 @@
 				
 				<!-- Slider -->
 				<Frames>
-					<Slider name="HelpHelp_HealthThresholdSlider" orientation="HORIZONTAL" inherits="OptionsSliderTemplate" minValue="0" maxValue="1" defaultValue="0.5" valueStep="0.1">
+					<Slider name="HelpHelp_HealthThresholdSlider" orientation="HORIZONTAL" inherits="OptionsSliderTemplate" minValue="0" maxValue="1" defaultValue="0.5" valueStep="0.01">
 						<Size x="125" y="20"/>
 						<Anchors>
 							<Anchor point="TOPLEFT" x="10" y="-16"/>

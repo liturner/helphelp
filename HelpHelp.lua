@@ -83,7 +83,9 @@ end
 
 -- Options UI Functions
 function HelpHelp.OK_Clicked(self)
+	print("healthSlider: "..HelpHelp_HealthThresholdSlider:GetValue())
 	HelpHelp_Database.Settings.HealthThreshold = tonumber(HelpHelp_HealthThresholdSlider:GetValue())
+	print("healthThreshold: "..HelpHelp_Database.Settings.HealthThreshold)
 	HelpHelp_Database.Settings.Message = HelpHelp_MessageEditBox:GetText()
 end
 
@@ -97,6 +99,7 @@ function HelpHelp.Default_Clicked(self)
 end
 
 function HelpHelp.OnOptionRefresh(self)
+	print("healthThreshold: "..HelpHelp_Database.Settings.HealthThreshold)
 	HelpHelp_HealthThresholdSlider:SetValue(HelpHelp_Database.Settings.HealthThreshold)
 	HelpHelp_MessageEditBox:SetText(HelpHelp_Database.Settings.Message)
 	HelpHelp_MessageEditBox:SetCursorPosition(0)
